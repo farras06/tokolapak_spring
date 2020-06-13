@@ -6,30 +6,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-
+//@Table(name = "employees")
 public class Employee {
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String employeeName;
 	private String email;
 	private String phoneNumber;
 	
-	@OneToOne(cascade = CascadeType.ALL )
-	@JoinColumn (name = "employee_address_id")
+	@OneToOne(cascade = CascadeType.ALL) // CascadeType.ALL
+	@JoinColumn(name = "employee_address_id")
 	private EmployeeAddress employeeAddress;
 	
-	@OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "department_id")
 	private Department department;
 	
-	public int getId() {	
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+	
+	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -59,6 +66,4 @@ public class Employee {
 	public void setEmployeeAddress(EmployeeAddress employeeAddress) {
 		this.employeeAddress = employeeAddress;
 	}
-	
-	
 }

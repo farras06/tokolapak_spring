@@ -12,15 +12,15 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Department {
-
-	@Id
-	@GeneratedValue (strategy  = GenerationType.IDENTITY)
-	private int id;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	private String name;
 	
-	@OneToMany (fetch = FetchType.LAZY, mappedBy ="department", cascade= CascadeType.ALL)
-	private Set <Employee> employee;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department", cascade = CascadeType.ALL)
+	private Set<Employee> employees; // Set -> Array yang isinya semua unik
 
 	public int getId() {
 		return id;
@@ -38,13 +38,11 @@ public class Department {
 		this.name = name;
 	}
 
-	public Set<Employee> getEmployee() {
-		return employee;
+	public Set<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployee(Set<Employee> employee) {
-		this.employee = employee;
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
 	}
-	
-	
 }

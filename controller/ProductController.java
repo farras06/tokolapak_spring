@@ -11,12 +11,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cimb.tokolapak.dao.EmployeeRepo;
 import com.cimb.tokolapak.dao.ProductRepo;
+import com.cimb.tokolapak.entity.Employee;
 import com.cimb.tokolapak.entity.Product;
 import com.cimb.tokolapak.service.ProductService;
 
 @RestController
 public class ProductController {
+	
+	// Controller -> Service -> DAO / Repo -> DB
+	
+//	Axios.post(API_URL, {
+//		productName: "",
+//		price: 25000
+//	})
 	
 	@Autowired
 	private ProductRepo productRepo;
@@ -24,14 +33,12 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("/product")
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	
+	@GetMapping("/products")
 	public Iterable<Product> getProducts() {
 		return productService.getProducts();
-	}
-	
-	@PostMapping("/product")
-	public Product addProduct(@RequestBody Product product) {
-		return productRepo.save(product);
 	}
 	
 	@GetMapping("/products/{id}")
@@ -39,26 +46,25 @@ public class ProductController {
 		return productService.getProductById(id);
 	}
 	
-	@DeleteMapping("/product{id}") 
-		public void deleteProductByid(@PathVariable int id) {
-			Optional<Product> product = this.productRepo.findById(id);
-			
-			if (product.equals(null) ) {
-				throw new RuntimeException ("product with id" + id + "dose not exist");
-			}
-		}
+	@PostMapping("/products")
+	public Product addProduct(@RequestBody Product product) {
+		return productService.addProduct(product);
+	}
 	
-	@PutMapping ("/product")
-		public Product updateProduct(@RequestBody Product product) {
-			Optional<Product> findProduct = productRepo.findById(product.getId());
-				if ( findProduct.toString() == "Optional.empty")
-					throw new RuntimeException ("Product with id" + product.getId() + "Does not exist");
-				
-				return productRepo.save(product);
-		}
+	@DeleteMapping("/products/{id}")
+	public void deleteProductById(@PathVariable int id) {
+		productService.deleteProductById(id);
+	}
+	
+	@PutMapping("/products")
+	public Product updateProduct(@RequestBody Product product) {
+		return productService.updateProduct(product);
+	}
 	
 	
-
-	
+	@GetMapping("/productName/{productName}")
+	public Product getProductByProductName(@PathVariable String productName) {
+		return productRepo.findByProductName(productName);
+	}
 	
 }

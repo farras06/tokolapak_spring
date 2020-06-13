@@ -9,24 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class EmployeeAddress {
-
+	
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String city;
 	private String streetName;
 	private String zipCode;
-	private Employee employee;
-	
+													// FetchType.LAZY
 	@OneToOne(mappedBy = "employeeAddress", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH }
-)	
+			CascadeType.PERSIST, CascadeType.REFRESH })
 	@JsonIgnore
-	
+	private Employee employee;
 	
 	public int getId() {
 		return id;
@@ -58,7 +58,4 @@ public class EmployeeAddress {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	
-	
-	
 }
