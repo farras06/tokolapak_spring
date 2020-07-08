@@ -1,5 +1,7 @@
 package com.cimb.tokolapak.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Unique dan menandakan ini PK
 	private int id;
 	
 	private String username;
@@ -21,21 +23,12 @@ public class User {
 	private String profilePicture;
 	
 	private String email;
-
+	
 	private boolean isVerified;
 	
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public boolean isVerified() {
-		return isVerified;
-	}
-	public void setVerified(boolean isVerified) {
-		this.isVerified = isVerified;
-	}
+	private String verifyToken;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -59,6 +52,24 @@ public class User {
 	}
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public boolean isVerified() {
+		return isVerified;
+	}
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
+	}
+	public String getVerifyToken() {
+		return verifyToken;
+	}
+	public void setVerifyToken(String verifyToken) {
+		this.verifyToken = verifyToken;
 	}
 	@Override
 	public String toString() {
